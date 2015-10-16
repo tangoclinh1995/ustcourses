@@ -1,0 +1,35 @@
+table.table-timetable {
+	width: 100%;
+	border-collapse: collapse;
+	border-style: hidden;
+}
+
+table.table-timetable th {
+	color: white;
+	text-align: center;
+	width: 13.143%;
+	border: none;
+	background: #0072C6;
+}
+
+table.table-timetable td {
+	border: 2px solid white;
+	background-color: #f0f0f0
+}
+
+table.table-timetable tr {
+	height: 20px	
+}
+
+table.table-timetable td.td-firstrow {
+	border-bottom: 1px dotted white
+}
+
+table.table-timetable td.td-middlerow {
+	border-top: 1px dotted white;
+	border-bottom: 1px dotted white
+}
+
+table.table-timetable .unavailable {
+	background-color: #757575
+}

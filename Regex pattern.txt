@@ -1,0 +1,3 @@
+Date & Time: ([a-zA-z]+) (\d{2}:\d{2})(AM|PM) - (\d{2}:\d{2})(AM|PM)
+Course Code,Name,Unit: [A-Z]+ (\d+[A-Z]*) - ([a-zA-z0-9 ,'-:\(\)]+)\((\d) unit[s]*\)
+Class Type & Nbr Code: ([A-Z]+)(\d+) \((\d+)\)

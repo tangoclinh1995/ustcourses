@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Timetable</title>
+	
+	<meta charset="utf8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<link rel="stylesheet" href="../Libraries/Bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../Libraries/Bootstrap/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="timetable.css">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6" id="timeTableContainer"></div>
+	</div>
+</div>
+
+<script src="../Libraries/jquery-2.1.1.min.js"></script>
+<script src="timetable.js"></script>
+<script>
+	var timetable = new TimeTable($("#timeTableContainer"));
+</script>	
+</body>
+</html>

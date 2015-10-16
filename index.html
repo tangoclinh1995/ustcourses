@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HKUST Course Database Management - Administration Tools</title>
+</head>
+<body>
+<button id="btn-loaddeptlist">Load Department Lists</button>
+<button id="btn-updatedata">Update all Course Data</button>
+<button id="btn-updatecommoncore">Update Common Core Data</button>
+<button id="btn-reset">Reset Database</button>
+
+<div id="message"></div>
+<div id="classdata"></div>
+
+<script src="../Libraries/jquery-2.1.1.min.js"></script>
+<script>
+	var departments = [];
+
+
+
+	function InsertNewData() {
+		var dept = "", deptId = "";
+		var cnt = 0;
+
+		$("#message").html("Start: " + (new Date()).toTimeString());
+
+		for (var i = 0 ;i < departments.length; ++i) {
+			++cnt;
+
+			dept += (cnt == 1 ? "" : ",") + departments[i].code;
+			deptId += (cnt == 1 ? "" : ",") + departments[i].id;
+
+			if (cnt == 15 || i == departments.length - 1) {
+				$("#message").append("<br/>Loading at " + i + "...");
+
+				$.ajax({			
+					url: "course-data-interface.php",
+					data: {
+						"task": 1,
+						"dept": dept,
+						"deptId": deptId,
+					},
+					dataType: "text",
+					type: "post",
+					error: function(xhr, msg, e) {
+						$("#message").append("<br/>AJAX Error!");
+					},
+					success: function(respond) {
+						$("#message").append("<br/>" + respond);
+						$("#message").append("<br/>Partially done: " + (new Date()).toTimeString());
+					}
+				});
+
+				cnt = 0;
+				dept = deptId = "";
+			}			
+		}
+	}
+
+
+
+	$("#btn-loaddeptlist").on("click", function() {
+		departments = [];
+		$("#message").html("Loading...");
+
+		$.ajax({
+			url: "course-data-interface.php",
+			data: {
+				"task": 0
+			},
+			dataType: "json",
+			type: "post",
+			error: function(xhr, msg, e) {
+				$("#message").html("AJAX Error!");
+			},
+			success: function(respond) {
+				departments = respond;
+
+				var s = "";
+				for (var i = 0; i < respond.length; ++i)
+					s += "(" + respond[i].id + "," + respond[i].code + ") ";
+
+				$("#classdata").html(s);
+
+				$("#message").html("Done!");
+			}
+		});
+	});
+
+
+
+	$("#btn-updatedata").on("click", function() {
+		$("#message").html("Loading...");
+
+		$.ajax({
+			url: "course-data-interface.php",
+			data: {
+				"task": 2
+			},
+			dataType: "text",
+			type: "post",
+			error: function(xhr, msg, e) {
+				$("#message").html("AJAX Error!");
+			},
+			success: function(respond) {
+				if (respond != 1)
+					$("#message").html("Error!");
+				else InsertNewData();
+			}
+		});
+	});
+
+
+
+	$("#btn-updatecommoncore").on("click", function() {
+		$("#message").html("Start: " + (new Date()).toTimeString());
+		$("#message").append("<br/>Loading...")
+
+		$.ajax({
+			url: "course-data-interface.php",
+			data: {
+				"task": 3
+			},
+			dataType: "text",
+			type: "post",
+			error: function(xhr, msg, e) {
+				$("#message").append("<br/>AJAX Error!");
+			},
+			success: function(respond) {
+				$("#message").append(respond);
+				$("#message").append("<br/>End: " + (new Date()).toTimeString());
+			}
+		});
+	});
+
+
+
+	$("#btn-reset").on("click", function() {
+		departments = [];
+
+		$("#message").html("Loading...");
+		$("#classdata").html("");
+
+		$.ajax({
+			url: "course-data-interface.php",
+			data: {
+				"task": 4
+			},
+			dataType: "text",
+			type: "post",
+			error: function(xhr, msg, e) {
+				$("#message").html("AJAX Error!");
+			},
+			success: function(respond) {
+				$("#message").html(respond);
+			}
+		});
+	});			
+</script>
+</body>
+</html>
